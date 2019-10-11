@@ -84,7 +84,7 @@ resource "ibm_is_subnet" "subnet2" {
   vpc             = "${ibm_is_vpc.vpc1.id}"
   zone            = "${var.zone2}"
   ipv4_cidr_block = "${var.cidr_block_2}"
-  public_gateway  = "${ibm_is_public_gateway.zone1_gateway.id}"
+  public_gateway  = "${ibm_is_public_gateway.zone2_gateway.id}"
 
   provisioner "local-exec" {
     command = "sleep 300"
@@ -97,7 +97,7 @@ resource "ibm_is_subnet" "subnet3" {
   vpc             = "${ibm_is_vpc.vpc1.id}"
   zone            = "${var.zone3}"
   ipv4_cidr_block = "${var.cidr_block_3}"
-  public_gateway  = "${ibm_is_public_gateway.zone1_gateway.id}"
+  public_gateway  = "${ibm_is_public_gateway.zone3_gateway.id}"
 
   provisioner "local-exec" {
     command = "sleep 300"
