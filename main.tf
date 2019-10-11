@@ -33,11 +33,45 @@ resource "null_resource" "groups" {
 }
 */
 
+resource "ibm_is_public_gateway" "zone1_gateway" {
+    name = "${var.vpc_name}_gateway"
+    vpc = "${ibm_is_vpc.vpc1.id}"
+    zone = "${var.zone1}"
+
+    //User can configure timeouts
+    timeouts {
+        create = "90m"
+    }
+}
+
+resource "ibm_is_public_gateway" "zone2_gateway" {
+    name = "${var.vpc_name}_gateway"
+    vpc = "${ibm_is_vpc.vpc1.id}"
+    zone = "${var.zone2}"
+
+    //User can configure timeouts
+    timeouts {
+        create = "90m"
+    }
+}
+
+resource "ibm_is_public_gateway" "zone3_gateway" {
+    name = "${var.vpc_name}_gateway"
+    vpc = "${ibm_is_vpc.vpc1.id}"
+    zone = "${var.zone3}"
+
+    //User can configure timeouts
+    timeouts {
+        create = "90m"
+    }
+}
+
 resource "ibm_is_subnet" "subnet1" {
   name            = "${var.vpc_name}-subnet1"
   vpc             = "${ibm_is_vpc.vpc1.id}"
   zone            = "${var.zone1}"
   ipv4_cidr_block = "${var.cidr_block_1}"
+  public_gateway  = "${ibm_is_public_gateway.zone1_gateway.id}"
 
   provisioner "local-exec" {
     command = "sleep 300"
@@ -50,6 +84,7 @@ resource "ibm_is_subnet" "subnet2" {
   vpc             = "${ibm_is_vpc.vpc1.id}"
   zone            = "${var.zone2}"
   ipv4_cidr_block = "${var.cidr_block_2}"
+  public_gateway  = "${ibm_is_public_gateway.zone1_gateway.id}"
 
   provisioner "local-exec" {
     command = "sleep 300"
@@ -62,6 +97,7 @@ resource "ibm_is_subnet" "subnet3" {
   vpc             = "${ibm_is_vpc.vpc1.id}"
   zone            = "${var.zone3}"
   ipv4_cidr_block = "${var.cidr_block_3}"
+  public_gateway  = "${ibm_is_public_gateway.zone1_gateway.id}"
 
   provisioner "local-exec" {
     command = "sleep 300"
