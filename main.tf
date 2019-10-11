@@ -34,7 +34,7 @@ resource "null_resource" "groups" {
 */
 
 resource "ibm_is_public_gateway" "zone1_gateway" {
-    name = "${var.vpc_name}_gateway"
+    name = "${var.vpc_name}_zone1_gateway"
     vpc = "${ibm_is_vpc.vpc1.id}"
     zone = "${var.zone1}"
 
@@ -45,7 +45,7 @@ resource "ibm_is_public_gateway" "zone1_gateway" {
 }
 
 resource "ibm_is_public_gateway" "zone2_gateway" {
-    name = "${var.vpc_name}_gateway"
+    name = "${var.vpc_name}_zone2_gateway"
     vpc = "${ibm_is_vpc.vpc1.id}"
     zone = "${var.zone2}"
 
@@ -56,7 +56,7 @@ resource "ibm_is_public_gateway" "zone2_gateway" {
 }
 
 resource "ibm_is_public_gateway" "zone3_gateway" {
-    name = "${var.vpc_name}_gateway"
+    name = "${var.vpc_name}_zone3_gateway"
     vpc = "${ibm_is_vpc.vpc1.id}"
     zone = "${var.zone3}"
 
