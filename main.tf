@@ -47,7 +47,7 @@ resource "ibm_is_vpc" "vpc1" {
 resource "ibm_is_security_group" "default_security_group" {
     name           = "${var.vpc_name}-default-security-group"
     vpc            = "${ibm_is_vpc.vpc1.id}"
-    resource_group = "${data.ibm_resource_group.group}"
+    resource_group = "${data.ibm_resource_group.group.id}"
 }
 
 resource "ibm_is_security_group_rule" "default_security_group_rule_all_inbound" {
