@@ -13,7 +13,7 @@ variable "environment" {
 
 resource "ibm_is_security_group" "default_security_group" {
     name = "${var.vpc_name}-default-security-group"
-    vpc = "${ibm_is_vpc.vpc1.id}"
+#    vpc = "${ibm_is_vpc.vpc1.id}"
 }
 
 resource "ibm_is_network_acl" "isNetworkACL" {
