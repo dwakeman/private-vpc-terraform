@@ -39,7 +39,7 @@ resource "ibm_is_network_acl" "isNetworkACL" {
 resource "ibm_is_vpc" "vpc1" {
   name = "${var.vpc_name}"
   resource_group  = "${data.ibm_resource_group.group.id}"
-  default_security_group = "${ibm_is_security_group.default_security_group.id}"
+#  default_security_group = "${ibm_is_security_group.default_security_group.id}"
   default_network_acl = "${ibm_is_network_acl.isNetworkACL.id}"
   tags = ["${var.environment}", "terraform"]
 }
