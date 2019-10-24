@@ -11,11 +11,42 @@ variable "environment" {
     default = "sandbox"
 }
 
+resource "ibm_is_security_group" "default_security_group" {
+    name = "${var.vpc_name}-default-security-group"
+    vpc = "${ibm_is_vpc.vpc1.id}"
+}
+
+resource "ibm_is_network_acl" "isNetworkACL" {
+            name = "${var.vpc_name}-default-acl"
+            rules=[
+            {
+                name = "outbound"
+                action = "allow"
+                protocol = "ALL"
+                source = "0.0.0.0/0"
+                destination = "0.0.0.0/0"
+                direction = "outbound"
+            },
+            {
+                name = "inbound"
+                action = "allow"
+                protocol = "ALL"
+                source = "0.0.0.0/0"
+                destination = "0.0.0.0/0"
+                direction = "inbound"
+            }
+            ]
+        }
+
+
 resource "ibm_is_vpc" "vpc1" {
   name = "${var.vpc_name}"
   resource_group  = "${data.ibm_resource_group.group.id}"
+  default_security_group = "${ibm_is_security_group.default_security_group}"
+  default_network_acl = "${ibm_is_network_acl.isNetworkACL}"
   tags = ["${var.environment}", "terraform"]
 }
+
 
 /*
 resource "null_resource" "groups" {
@@ -34,7 +65,7 @@ resource "null_resource" "groups" {
 */
 
 resource "ibm_is_public_gateway" "zone1_gateway" {
-    name = "${var.vpc_name}_zone1_gateway"
+    name = "${var.vpc_name}-zone1-gateway"
     vpc = "${ibm_is_vpc.vpc1.id}"
     zone = "${var.zone1}"
 
@@ -45,7 +76,7 @@ resource "ibm_is_public_gateway" "zone1_gateway" {
 }
 
 resource "ibm_is_public_gateway" "zone2_gateway" {
-    name = "${var.vpc_name}_zone2_gateway"
+    name = "${var.vpc_name}-zone2-gateway"
     vpc = "${ibm_is_vpc.vpc1.id}"
     zone = "${var.zone2}"
 
@@ -56,7 +87,7 @@ resource "ibm_is_public_gateway" "zone2_gateway" {
 }
 
 resource "ibm_is_public_gateway" "zone3_gateway" {
-    name = "${var.vpc_name}_zone3_gateway"
+    name = "${var.vpc_name}-zone3-gateway"
     vpc = "${ibm_is_vpc.vpc1.id}"
     zone = "${var.zone3}"
 
@@ -72,11 +103,7 @@ resource "ibm_is_subnet" "subnet1" {
   zone            = "${var.zone1}"
   ipv4_cidr_block = "${var.cidr_block_1}"
   public_gateway  = "${ibm_is_public_gateway.zone1_gateway.id}"
-
-  provisioner "local-exec" {
-    command = "sleep 300"
-    when    = "destroy"
-  }
+  #network_acl     = "${ibm_is_network_acl.isNetworkACL}"
 }
 
 resource "ibm_is_subnet" "subnet2" {
@@ -85,11 +112,7 @@ resource "ibm_is_subnet" "subnet2" {
   zone            = "${var.zone2}"
   ipv4_cidr_block = "${var.cidr_block_2}"
   public_gateway  = "${ibm_is_public_gateway.zone2_gateway.id}"
-
-  provisioner "local-exec" {
-    command = "sleep 300"
-    when    = "destroy"
-  }
+  #network_acl     = "${ibm_is_network_acl.isNetworkACL}"
 }
 
 resource "ibm_is_subnet" "subnet3" {
@@ -98,10 +121,6 @@ resource "ibm_is_subnet" "subnet3" {
   zone            = "${var.zone3}"
   ipv4_cidr_block = "${var.cidr_block_3}"
   public_gateway  = "${ibm_is_public_gateway.zone3_gateway.id}"
-
-  provisioner "local-exec" {
-    command = "sleep 300"
-    when    = "destroy"
-  }
+  #network_acl     = "${ibm_is_network_acl.isNetworkACL}"
 }
 
