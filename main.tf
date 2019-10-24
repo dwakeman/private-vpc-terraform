@@ -37,17 +37,32 @@ resource "ibm_is_network_acl" "isNetworkACL" {
 
 
 resource "ibm_is_vpc" "vpc1" {
-  name = "${var.vpc_name}"
-  resource_group  = "${data.ibm_resource_group.group.id}"
+  name                = "${var.vpc_name}"
+  resource_group      = "${data.ibm_resource_group.group.id}"
 #  default_security_group = "${ibm_is_security_group.default_security_group.id}"
   default_network_acl = "${ibm_is_network_acl.isNetworkACL.id}"
-  tags = ["${var.environment}", "terraform"]
+  tags                = ["${var.environment}", "terraform"]
 }
 
 resource "ibm_is_security_group" "default_security_group" {
-    name = "${var.vpc_name}-default-security-group"
-    vpc = "${ibm_is_vpc.vpc1.id}"
+    name           = "${var.vpc_name}-default-security-group"
+    vpc            = "${ibm_is_vpc.vpc1.id}"
+    resource_group = "${data.ibm_resource_group.group}"
 }
+
+resource "ibm_is_security_group_rule" "default_security_group_rule_all_inbound" {
+    group = "${ibm_is_security_group.default_security_group.id}"
+    direction = "inbound"
+
+    depends_on = [ibm_is_security_group.default_security_group]
+ }
+
+resource "ibm_is_security_group_rule" "default_security_group_rule_all_outbound" {
+    group = "${ibm_is_security_group.default_security_group.id}"
+    direction = "outbound"
+
+    depends_on = [ibm_is_security_group.default_security_group]
+ }
 
 /*
 resource "null_resource" "groups" {
@@ -104,7 +119,7 @@ resource "ibm_is_subnet" "subnet1" {
   zone            = "${var.zone1}"
   ipv4_cidr_block = "${var.cidr_block_1}"
   public_gateway  = "${ibm_is_public_gateway.zone1_gateway.id}"
-  #network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
+  network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
 }
 
 resource "ibm_is_subnet" "subnet2" {
@@ -113,7 +128,7 @@ resource "ibm_is_subnet" "subnet2" {
   zone            = "${var.zone2}"
   ipv4_cidr_block = "${var.cidr_block_2}"
   public_gateway  = "${ibm_is_public_gateway.zone2_gateway.id}"
-  #network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
+  network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
 }
 
 resource "ibm_is_subnet" "subnet3" {
@@ -122,6 +137,6 @@ resource "ibm_is_subnet" "subnet3" {
   zone            = "${var.zone3}"
   ipv4_cidr_block = "${var.cidr_block_3}"
   public_gateway  = "${ibm_is_public_gateway.zone3_gateway.id}"
-  #network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
+  network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
 }
 
