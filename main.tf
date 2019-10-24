@@ -11,10 +11,7 @@ variable "environment" {
     default = "sandbox"
 }
 
-resource "ibm_is_security_group" "default_security_group" {
-    name = "${var.vpc_name}-default-security-group"
-#    vpc = "${ibm_is_vpc.vpc1.id}"
-}
+
 
 resource "ibm_is_network_acl" "isNetworkACL" {
             name = "${var.vpc_name}-default-acl"
@@ -47,6 +44,10 @@ resource "ibm_is_vpc" "vpc1" {
   tags = ["${var.environment}", "terraform"]
 }
 
+resource "ibm_is_security_group" "default_security_group" {
+    name = "${var.vpc_name}-default-security-group"
+    vpc = "${ibm_is_vpc.vpc1.id}"
+}
 
 /*
 resource "null_resource" "groups" {
