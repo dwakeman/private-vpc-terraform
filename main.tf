@@ -54,14 +54,14 @@ resource "ibm_is_security_group_rule" "default_security_group_rule_all_inbound" 
     group = "${ibm_is_security_group.default_security_group.id}"
     direction = "inbound"
 
-    depends_on = [ibm_is_security_group.default_security_group]
+    depends_on = ["ibm_is_security_group.default_security_group"]
  }
 
 resource "ibm_is_security_group_rule" "default_security_group_rule_all_outbound" {
     group = "${ibm_is_security_group.default_security_group.id}"
     direction = "outbound"
 
-    depends_on = [ibm_is_security_group.default_security_group]
+    depends_on = ["ibm_is_security_group.default_security_group"]
  }
 
 /*
