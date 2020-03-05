@@ -122,7 +122,7 @@ resource "ibm_is_subnet" "subnet3" {
   network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
 }
 
-resource "ibm_is_ssh_key" "isSSHKey" {
-    name = "samaritan_key"
-    public_key = "${var.ssh_key}"
-}
+#resource "ibm_is_ssh_key" "isSSHKey" {
+#    name = "samaritan_key"
+#    public_key = "${var.ssh_key}"
+#}
