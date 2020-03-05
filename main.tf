@@ -123,6 +123,6 @@ resource "ibm_is_subnet" "subnet3" {
 }
 
 resource "ibm_is_ssh_key" "isSSHKey" {
-    name = "samaritan_key"
+    name = "samaritan-key"
     public_key = "${var.ssh_key}"
 }
