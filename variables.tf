@@ -38,3 +38,6 @@ variable ibm_cloud_api_key {
 
 }
 
+variable ssh_key {
+    
+}

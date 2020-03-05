@@ -12,37 +12,35 @@ variable "environment" {
 }
 
 
-
-resource "ibm_is_network_acl" "isNetworkACL" {
-            name = "${var.vpc_name}-default-acl"
-            rules=[
-            {
-                name = "outbound"
-                action = "allow"
-#                protocol = "ALL"
-                source = "0.0.0.0/0"
-                destination = "0.0.0.0/0"
-                direction = "outbound"
-            },
-            {
-                name = "inbound"
-                action = "allow"
-#                protocol = "ALL"
-                source = "0.0.0.0/0"
-                destination = "0.0.0.0/0"
-                direction = "inbound"
-            }
-            ]
-        }
-
-
 resource "ibm_is_vpc" "vpc1" {
   name                = "${var.vpc_name}"
   resource_group      = "${data.ibm_resource_group.group.id}"
-#  default_security_group = "${ibm_is_security_group.default_security_group.id}"
-  default_network_acl = "${ibm_is_network_acl.isNetworkACL.id}"
   tags                = ["${var.environment}", "terraform"]
 }
+
+resource "ibm_is_network_acl" "isNetworkACL" {
+    name = "${var.vpc_name}-default-acl"
+    vpc = "${ibm_is_vpc.vpc1.id}"
+    rules=[
+    {
+        name = "outbound"
+        action = "allow"
+#                protocol = "ALL"
+        source = "0.0.0.0/0"
+        destination = "0.0.0.0/0"
+        direction = "outbound"
+    },
+    {
+        name = "inbound"
+        action = "allow"
+#                protocol = "ALL"
+        source = "0.0.0.0/0"
+        destination = "0.0.0.0/0"
+        direction = "inbound"
+    }
+    ]
+}
+
 
 resource "ibm_is_security_group" "default_security_group" {
     name           = "${var.vpc_name}-default-security-group"
@@ -63,22 +61,6 @@ resource "ibm_is_security_group_rule" "default_security_group_rule_all_outbound"
 
     depends_on = ["ibm_is_security_group.default_security_group"]
  }
-
-/*
-resource "null_resource" "groups" {
-
-    provisioner "local-exec" {
-        environment = {
-            IBMCLOUD_COLOR=false
-        }
-        command = <<EOT
-        ibmcloud login -c ${var.account_id} --apikey ${var.ibm_cloud_api_key} -g ${var.resource_group} -r ${var.region} \
-        && ibmcloud resource groups
-        EOT
-    }
-  
-}
-*/
 
 resource "ibm_is_public_gateway" "zone1_gateway" {
     name = "${var.vpc_name}-zone1-gateway"
@@ -140,3 +122,7 @@ resource "ibm_is_subnet" "subnet3" {
   network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
 }
 
+resource "ibm_is_ssh_key" "isSSHKey" {
+    name = "samaritan_key"
+    public_key = "${var.ssh_key}"
+}
