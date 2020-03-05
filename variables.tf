@@ -3,7 +3,7 @@ variable "region" {
 }
 
 variable "generation" {
-    default = "2"
+    default = 2
 }
 
 variable "zone1" {
