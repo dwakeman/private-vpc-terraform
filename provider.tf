@@ -1,4 +1,4 @@
 provider "ibm" {
-    generation = 1
+    generation = "${var.generation}"
     region     = "${var.region}"
 }

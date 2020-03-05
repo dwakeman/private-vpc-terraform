@@ -2,6 +2,10 @@ variable "region" {
     default = "us-south"
 }
 
+variable "generation" {
+    default = "2"
+}
+
 variable "zone1" {
   default = "us-south-1"
 }
