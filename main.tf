@@ -138,3 +138,28 @@ resource "ibm_is_subnet" "subnet3" {
 #    public_key = "${var.ssh_key}"
 #}
 
+resource "ibm_container_vpc_cluster" "cluster" {
+  name              = "${var.cluster_name}"
+  vpc_id            = "${data.ibm_is_vpc.vpc1.id}"
+  flavor            = "${var.flavor}"
+  worker_count      = "${var.worker_count}"
+  resource_group_id = "${data.ibm_resource_group.resource_group.id}"
+  tags              = ["${var.environment}", "terraform"]
+
+  zones = [
+    {
+        subnet_id = "${data.ibm_is_subnet.subnet1.id}"
+        name      = "${var.zone1}"
+    },
+    {
+        subnet_id = "${data.ibm_is_subnet.subnet2.id}"
+        name      = "${var.zone2}"
+    },
+    {
+        subnet_id = "${data.ibm_is_subnet.subnet3.id}"
+        name      = "${var.zone3}"
+    }
+
+  ]
+
+}

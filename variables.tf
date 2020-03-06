@@ -30,6 +30,18 @@ variable cidr_block_3 {
     default = "10.240.128.0/18"
 }
 
+variable cluster_name {
+
+}
+
+variable flavor {
+    default = "cx1.4x8"
+}
+
+variable "worker_count" {
+    default = 1
+}
+
 variable account_id {
 
 }
