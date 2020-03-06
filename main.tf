@@ -138,14 +138,3 @@ resource "ibm_is_subnet" "subnet3" {
 #    public_key = "${var.ssh_key}"
 #}
 
-resource "ibm_container_vpc_cluster" "cluster" {
-  name              = "dw-test-vpc-cluster"
-  vpc_id            = "${ibm_is_vpc.vpc1.id}"
-  flavor            = "c2.2x4"
-  worker_count      = "3"
-  resource_group_id = "${data.ibm_resource_group.group.id}"
-  zones {
-    subnet_id = "111aaa1a-aaa1-1a11-1111-11111a11111a"
-    name      = "us-south-1"
-  }
-}
