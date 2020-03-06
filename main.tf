@@ -148,15 +148,15 @@ resource "ibm_container_vpc_cluster" "cluster" {
 
   zones = [
     {
-        subnet_id = "${data.ibm_is_subnet.subnet1.id}"
+        subnet_id = "${ibm_is_subnet.subnet1.id}"
         name      = "${var.zone1}"
     },
     {
-        subnet_id = "${data.ibm_is_subnet.subnet2.id}"
+        subnet_id = "${ibm_is_subnet.subnet2.id}"
         name      = "${var.zone2}"
     },
     {
-        subnet_id = "${data.ibm_is_subnet.subnet3.id}"
+        subnet_id = "${ibm_is_subnet.subnet3.id}"
         name      = "${var.zone3}"
     }
 
