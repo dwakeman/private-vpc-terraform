@@ -1,9 +1,3 @@
-variable "vpc_name" {}
-variable "resource_group" {
-    default = "default"
-}
-
-
 data "ibm_resource_group" "group" {
     name = "${var.resource_group}"
 }
@@ -140,10 +134,10 @@ resource "ibm_is_subnet" "subnet3" {
 
 resource "ibm_container_vpc_cluster" "cluster" {
   name              = "${var.cluster_name}"
-  vpc_id            = "${data.ibm_is_vpc.vpc1.id}"
+  vpc_id            = "${ibm_is_vpc.vpc1.id}"
   flavor            = "${var.flavor}"
   worker_count      = "${var.worker_count}"
-  resource_group_id = "${data.ibm_resource_group.resource_group.id}"
+  resource_group_id = "${data.ibm_resource_group.group.id}"
   tags              = ["${var.environment}", "terraform"]
 
   zones = [

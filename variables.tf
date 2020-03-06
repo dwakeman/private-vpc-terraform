@@ -1,3 +1,11 @@
+variable "vpc_name" {
+    
+}
+
+variable "resource_group" {
+    default = "default"
+}
+
 variable "region" {
     default = "us-south"
 }
