@@ -55,6 +55,17 @@ resource "ibm_is_security_group_rule" "default_security_group_rule_all_inbound" 
     depends_on = ["ibm_is_security_group.default_security_group"]
  }
 
+resource "ibm_is_security_group_rule" "default_security_group_rule_iks_management" {
+    group = "${ibm_is_security_group.default_security_group.id}"
+    direction = "inbound"
+    tcp = {
+        port_min = 30000
+        port_max = 32767
+    }
+
+    depends_on = ["ibm_is_security_group.default_security_group"]
+ }
+
 resource "ibm_is_security_group_rule" "default_security_group_rule_all_outbound" {
     group = "${ibm_is_security_group.default_security_group.id}"
     direction = "outbound"
@@ -126,3 +137,15 @@ resource "ibm_is_subnet" "subnet3" {
 #    name = "samaritan-key"
 #    public_key = "${var.ssh_key}"
 #}
+
+resource "ibm_container_vpc_cluster" "cluster" {
+  name              = "dw-test-vpc-cluster"
+  vpc_id            = "${ibm_is_vpc.vpc1.id}"
+  flavor            = "c2.2x4"
+  worker_count      = "3"
+  resource_group_id = "${data.ibm_resource_group.group.id}"
+  zones {
+    subnet_id = "111aaa1a-aaa1-1a11-1111-11111a11111a"
+    name      = "us-south-1"
+  }
+}
