@@ -1,6 +1,11 @@
-data "ibm_resource_group" "group" {
-    name = "${var.resource_group}"
+data "ibm_resource_group" "vpc_group" {
+    name = "${var.vpc_resource_group}"
 }
+
+data "ibm_resource_group" "kube_group" {
+    name = "${var.kube_resource_group}"
+}
+
 variable "environment" {
     default = "sandbox"
 }
@@ -8,7 +13,7 @@ variable "environment" {
 
 resource "ibm_is_vpc" "vpc1" {
   name                = "${var.vpc_name}"
-  resource_group      = "${data.ibm_resource_group.group.id}"
+  resource_group      = "${data.ibm_resource_group.vpc_group.id}"
   tags                = ["${var.environment}", "terraform"]
 }
 
@@ -135,7 +140,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
     kube_version      = "${var.kube_version}"
     worker_count      = "${var.worker_count}"
     wait_till         = "${var.wait_till}"
-    resource_group_id = "${data.ibm_resource_group.group.id}"
+    resource_group_id = "${data.ibm_resource_group.kube_group.id}"
     tags              = ["${var.environment}", "terraform"]
 
     zones = [

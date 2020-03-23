@@ -2,7 +2,7 @@ variable "vpc_name" {
     
 }
 
-variable "resource_group" {
+variable "vpc_resource_group" {
     default = "default"
 }
 
@@ -40,6 +40,10 @@ variable cidr_block_3 {
 
 variable cluster_name {
 
+}
+
+variable "kube_resource_group" {
+    default = "default"
 }
 
 variable flavor {
