@@ -127,16 +127,14 @@ resource "ibm_is_subnet" "subnet3" {
   network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
 }
 
-#resource "ibm_is_ssh_key" "isSSHKey" {
-#    name = "samaritan-key"
-#    public_key = "${var.ssh_key}"
-#}
 
 resource "ibm_container_vpc_cluster" "cluster" {
   name              = "${var.cluster_name}"
   vpc_id            = "${ibm_is_vpc.vpc1.id}"
   flavor            = "${var.flavor}"
+  kube_version      = "${var.kube_version}"
   worker_count      = "${var.worker_count}"
+  wait_till         = "${var.wait_till}"
   resource_group_id = "${data.ibm_resource_group.group.id}"
   tags              = ["${var.environment}", "terraform"]
 

@@ -11,7 +11,7 @@ variable "region" {
 }
 
 variable "generation" {
-    default = 2
+    default = 1
 }
 
 variable "zone1" {
@@ -46,8 +46,16 @@ variable flavor {
     default = "cx1.4x8"
 }
 
+variable "kube_version" {
+    # to determine available versions run "ic ks versions"
+    default = "1.17.4"
+}
 variable "worker_count" {
     default = 1
+}
+
+variable "wait_till" {
+    default = "IngressReady"
 }
 
 variable account_id {
@@ -56,8 +64,4 @@ variable account_id {
 
 variable ibm_cloud_api_key {
 
-}
-
-variable ssh_key {
-    
 }
