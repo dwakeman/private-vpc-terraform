@@ -101,57 +101,59 @@ resource "ibm_is_public_gateway" "zone3_gateway" {
 }
 
 resource "ibm_is_subnet" "subnet1" {
-  name            = "${var.vpc_name}-subnet1"
-  vpc             = "${ibm_is_vpc.vpc1.id}"
-  zone            = "${var.zone1}"
-  ipv4_cidr_block = "${var.cidr_block_1}"
-  public_gateway  = "${ibm_is_public_gateway.zone1_gateway.id}"
-  network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
+    name            = "${var.vpc_name}-subnet1"
+    vpc             = "${ibm_is_vpc.vpc1.id}"
+    zone            = "${var.zone1}"
+    ipv4_cidr_block = "${var.cidr_block_1}"
+    public_gateway  = "${ibm_is_public_gateway.zone1_gateway.id}"
+    network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
 }
 
 resource "ibm_is_subnet" "subnet2" {
-  name            = "${var.vpc_name}-subnet2"
-  vpc             = "${ibm_is_vpc.vpc1.id}"
-  zone            = "${var.zone2}"
-  ipv4_cidr_block = "${var.cidr_block_2}"
-  public_gateway  = "${ibm_is_public_gateway.zone2_gateway.id}"
-  network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
+    name            = "${var.vpc_name}-subnet2"
+    vpc             = "${ibm_is_vpc.vpc1.id}"
+    zone            = "${var.zone2}"
+    ipv4_cidr_block = "${var.cidr_block_2}"
+    public_gateway  = "${ibm_is_public_gateway.zone2_gateway.id}"
+    network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
 }
 
 resource "ibm_is_subnet" "subnet3" {
-  name            = "${var.vpc_name}-subnet3"
-  vpc             = "${ibm_is_vpc.vpc1.id}"
-  zone            = "${var.zone3}"
-  ipv4_cidr_block = "${var.cidr_block_3}"
-  public_gateway  = "${ibm_is_public_gateway.zone3_gateway.id}"
-  network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
+    name            = "${var.vpc_name}-subnet3"
+    vpc             = "${ibm_is_vpc.vpc1.id}"
+    zone            = "${var.zone3}"
+    ipv4_cidr_block = "${var.cidr_block_3}"
+    public_gateway  = "${ibm_is_public_gateway.zone3_gateway.id}"
+    network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
 }
 
 
 resource "ibm_container_vpc_cluster" "cluster" {
-  name              = "${var.cluster_name}"
-  vpc_id            = "${ibm_is_vpc.vpc1.id}"
-  flavor            = "${var.flavor}"
-  kube_version      = "${var.kube_version}"
-  worker_count      = "${var.worker_count}"
-  wait_till         = "${var.wait_till}"
-  resource_group_id = "${data.ibm_resource_group.group.id}"
-  tags              = ["${var.environment}", "terraform"]
+    name              = "${var.cluster_name}"
+    vpc_id            = "${ibm_is_vpc.vpc1.id}"
+    flavor            = "${var.flavor}"
+    kube_version      = "${var.kube_version}"
+    worker_count      = "${var.worker_count}"
+    wait_till         = "${var.wait_till}"
+    resource_group_id = "${data.ibm_resource_group.group.id}"
+    tags              = ["${var.environment}", "terraform"]
 
-  zones = [
-    {
-        subnet_id = "${ibm_is_subnet.subnet1.id}"
-        name      = "${var.zone1}"
-    },
-    {
-        subnet_id = "${ibm_is_subnet.subnet2.id}"
-        name      = "${var.zone2}"
-    },
-    {
-        subnet_id = "${ibm_is_subnet.subnet3.id}"
-        name      = "${var.zone3}"
-    }
+    zones = [
+        {
+            subnet_id = "${ibm_is_subnet.subnet1.id}"
+            name      = "${var.zone1}"
+        },
+        {
+            subnet_id = "${ibm_is_subnet.subnet2.id}"
+            name      = "${var.zone2}"
+        },
+        {
+            subnet_id = "${ibm_is_subnet.subnet3.id}"
+            name      = "${var.zone3}"
+        }
 
-  ]
+    ]
+
+    depends_on = ["ibm_is_vpc.vpc1"]
 
 }
