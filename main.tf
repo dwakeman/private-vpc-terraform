@@ -141,7 +141,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
     worker_count      = "${var.worker_count}"
     wait_till         = "${var.wait_till}"
     resource_group_id = "${data.ibm_resource_group.kube_group.id}"
-    tags              = ["${var.environment}", "vpc: ${var.vpc_name}", "terraform"]
+    tags              = ["env: ${var.environment}", "vpc: ${var.vpc_name}", "terraform"]
 
     zones = [
         {
