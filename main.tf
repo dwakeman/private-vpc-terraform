@@ -44,7 +44,7 @@ resource "ibm_is_network_acl" "isNetworkACL" {
 resource "ibm_is_security_group" "default_security_group" {
     name           = "${var.vpc_name}-default-security-group"
     vpc            = "${ibm_is_vpc.vpc1.id}"
-    resource_group = "${data.ibm_resource_group.group.id}"
+    resource_group = "${data.ibm_resource_group.vpc_group.id}"
 }
 
 resource "ibm_is_security_group_rule" "default_security_group_rule_all_inbound" {
@@ -141,7 +141,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
     worker_count      = "${var.worker_count}"
     wait_till         = "${var.wait_till}"
     resource_group_id = "${data.ibm_resource_group.kube_group.id}"
-    tags              = ["${var.environment}", "terraform"]
+    tags              = ["${var.environment}", "vpc: ${var.vpc_name}", "terraform"]
 
     zones = [
         {
