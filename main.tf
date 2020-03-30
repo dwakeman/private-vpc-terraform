@@ -39,7 +39,7 @@ resource "ibm_is_network_acl" "isNetworkACL" {
     }
     ]
 
-    depends_on ["ibm_is_vpc.vpc1"]
+    depends_on = ["ibm_is_vpc.vpc1"]
 }
 
 
@@ -48,7 +48,7 @@ resource "ibm_is_security_group" "default_security_group" {
     vpc            = "${ibm_is_vpc.vpc1.id}"
     resource_group = "${data.ibm_resource_group.vpc_group.id}"
 
-    depends_on ["ibm_is_vpc.vpc1"]
+    depends_on = ["ibm_is_vpc.vpc1"]
 }
 
 resource "ibm_is_security_group_rule" "default_security_group_rule_all_inbound" {
@@ -86,7 +86,7 @@ resource "ibm_is_public_gateway" "zone1_gateway" {
         create = "90m"
     }
 
-    depends_on ["ibm_is_vpc.vpc1"]
+    depends_on = ["ibm_is_vpc.vpc1"]
 }
 
 resource "ibm_is_public_gateway" "zone2_gateway" {
@@ -99,7 +99,7 @@ resource "ibm_is_public_gateway" "zone2_gateway" {
         create = "90m"
     }
 
-    depends_on ["ibm_is_vpc.vpc1"]
+    depends_on = ["ibm_is_vpc.vpc1"]
 }
 
 resource "ibm_is_public_gateway" "zone3_gateway" {
@@ -112,16 +112,16 @@ resource "ibm_is_public_gateway" "zone3_gateway" {
         create = "90m"
     }
 
-    depends_on ["ibm_is_vpc.vpc1"]
+    depends_on = ["ibm_is_vpc.vpc1"]
 }
 
 resource "ibm_is_vpc_address_prefix" "address_prefix1" {
     name = "prefix1"
     zone = "${var.zone1}"
     vpc  = "${ibm_is_vpc.vpc1.id}"
-    cidr = "${var.address_prefix_1)"
+    cidr = "${var.address_prefix_1}"
 
-    depends_on ["ibm_is_vpc.vpc1"]
+    depends_on = ["ibm_is_vpc.vpc1"]
 
 }
 
@@ -131,7 +131,7 @@ resource "ibm_is_vpc_address_prefix" "address_prefix2" {
     vpc  = "${ibm_is_vpc.vpc1.id}"
     cidr = "${var.address_prefix_2}"
 
-    depends_on ["ibm_is_vpc.vpc1"]
+    depends_on = ["ibm_is_vpc.vpc1"]
 
 }
 
@@ -141,7 +141,7 @@ resource "ibm_is_vpc_address_prefix" "address_prefix3" {
     vpc  = "${ibm_is_vpc.vpc1.id}"
     cidr = "${var.address_prefix_3}"
 
-    depends_on ["ibm_is_vpc.vpc1"]
+    depends_on = ["ibm_is_vpc.vpc1"]
 
 }
 
@@ -153,7 +153,7 @@ resource "ibm_is_subnet" "subnet1" {
     public_gateway  = "${ibm_is_public_gateway.zone1_gateway.id}"
     network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
 
-    depends_on ["ibm_is_vpc.vpc1"]
+    depends_on = ["ibm_is_vpc.vpc1"]
 }
 
 resource "ibm_is_subnet" "subnet2" {
@@ -164,7 +164,7 @@ resource "ibm_is_subnet" "subnet2" {
     public_gateway  = "${ibm_is_public_gateway.zone2_gateway.id}"
     network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
 
-    depends_on ["ibm_is_vpc.vpc1"]
+    depends_on = ["ibm_is_vpc.vpc1"]
 }
 
 resource "ibm_is_subnet" "subnet3" {
@@ -175,7 +175,7 @@ resource "ibm_is_subnet" "subnet3" {
     public_gateway  = "${ibm_is_public_gateway.zone3_gateway.id}"
     network_acl     = "${ibm_is_network_acl.isNetworkACL.id}"
 
-    depends_on ["ibm_is_vpc.vpc1"]
+    depends_on = ["ibm_is_vpc.vpc1"]
 }
 
 
