@@ -26,16 +26,28 @@ variable "zone3" {
   default = "us-south-3"
 }
 
+variable address_prefix_1 {
+    default = "10.1.0.0/16"
+}
+
+variable address_prefix_2 {
+    default = "10.2.0.0/16"
+}
+
+variable address_prefix_3 {
+    default = "10.3.0.0/16"
+}
+
 variable cidr_block_1 {
-    default = "10.240.0.0/18"
+    default = "10.1.1.0/18"
 }
 
 variable cidr_block_2 {
-    default = "10.240.64.0/18"
+    default = "10.2.1.0/18"
 }
 
 variable cidr_block_3 {
-    default = "10.240.128.0/18"
+    default = "10.3.1.0/18"
 }
 
 variable cluster_name {
