@@ -50,6 +50,11 @@ variable cidr_block_3 {
     default = "10.3.1.0/24"
 }
 
+variable provision_cluster {
+    description = "If set to true, provision the cluster"
+    type = bool
+    default = false
+}
 variable cluster_name {
 
 }
@@ -59,7 +64,7 @@ variable "kube_resource_group" {
 }
 
 variable flavor {
-    default = "cx1.4x8"
+    default = "b2.4x16"
 }
 
 variable "kube_version" {

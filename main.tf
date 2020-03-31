@@ -183,6 +183,8 @@ resource "ibm_is_subnet" "subnet3" {
 
 
 resource "ibm_container_vpc_cluster" "cluster" {
+    count = "${var.provision_cluster ? 1 : 0}"
+
     name              = "${var.cluster_name}"
     vpc_id            = "${ibm_is_vpc.vpc1.id}"
     flavor            = "${var.flavor}"
