@@ -39,15 +39,15 @@ variable address_prefix_3 {
 }
 
 variable cidr_block_1 {
-    default = "10.1.1.0/18"
+    default = "10.1.1.0/24"
 }
 
 variable cidr_block_2 {
-    default = "10.2.1.0/18"
+    default = "10.2.1.0/24"
 }
 
 variable cidr_block_3 {
-    default = "10.3.1.0/18"
+    default = "10.3.1.0/24"
 }
 
 variable cluster_name {

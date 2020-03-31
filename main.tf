@@ -181,7 +181,7 @@ resource "ibm_is_subnet" "subnet3" {
 
 
 
-/*
+
 resource "ibm_container_vpc_cluster" "cluster" {
     name              = "${var.cluster_name}"
     vpc_id            = "${ibm_is_vpc.vpc1.id}"
@@ -208,7 +208,6 @@ resource "ibm_container_vpc_cluster" "cluster" {
 
     ]
 
-    depends_on = ["ibm_is_vpc.vpc1"]
+    depends_on = ["ibm_is_subnet.subnet1","ibm_is_subnet.subnet2","ibm_is_subnet.subnet3"]
 
 }
-*/
