@@ -52,7 +52,7 @@ variable cidr_block_3 {
 
 variable provision_cluster {
     description = "If set to true, provision the cluster"
-    default = false
+    default = 0
 }
 variable cluster_name {
 
